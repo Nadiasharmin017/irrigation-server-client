@@ -1,63 +1,27 @@
-import React, { useEffect, useState } from "react";
-// import database from "./firebase";
-import { ref, onValue, set } from "firebase/database";
-import database from "../../firebase.config";
+import React from 'react';
 
-const Showdata = () => {
-  const [manualControl, setManualControl] = useState(false);
-  const [manualDuration, setManualDuration] = useState(10);
-  const [sensorData, setSensorData] = useState(null);
-  const [soilMoisture, setSoilMoisture] = useState(null);
+const Showdata = ({sensorData, soilMoisture,manualControl }) => {
+    return (
+        <div className="stats stats-vertical lg:stats-horizontal shadow inline-block ...">
+        <div className="stat">
+          <div className="stat-title">Sensor Data:</div>
+          <div className="stat-value">{sensorData}</div>
+          <div className="stat-desc">Jan 1st - Feb 1st</div>
+        </div>
 
-  // Read data from Firebase
-  useEffect(() => {
-    const treeRef = ref(database, "Tree1");
+        <div className="stat">
+          <div className="stat-title">Soil Moisture:</div>
+          <div className="stat-value">{soilMoisture}</div>
+          <div className="stat-desc">↗︎ 400 (22%)</div>
+        </div>
 
-    // Listen for changes in Tree1 data
-    onValue(treeRef, (snapshot) => {
-      const treeData = snapshot.val();
-      if (treeData) {
-        setManualControl(treeData.manualControl);
-        setManualDuration(treeData.manualDuration);
-        setSensorData(treeData.sensorData);
-        setSoilMoisture(treeData.soilMoisture);
-      }
-    });
-  }, []);
-
-  // Update manual control status
-  const toggleManualControl = () => {
-    const treeRef = ref(database, "Tree1/manualControl");
-    set(treeRef, !manualControl); // Toggle between true and false
-  };
-
-  // Update manual duration
-  const updateManualDuration = (newDuration) => {
-    const treeRef = ref(database, "Tree1/manualDuration");
-    set(treeRef, newDuration); // Set the new duration
-  };
-
-  return (
-    <div>
-      <h1>Tree1 Control</h1>
-      <div>
-        <h2>Sensor Data: {sensorData}</h2>
-        <h2>Soil Moisture: {soilMoisture}</h2>
+        <div className="stat">
+          <div className="stat-title">Motor Status</div>
+          <div className="stat-value">{manualControl ? "True" : "False"}</div>
+          <div className="stat-desc">↘︎ 90 (14%)</div>
+        </div>
       </div>
-      <div>
-        <h2>Manual Control: {manualControl ? "Enabled" : "Disabled"}</h2>
-        <button onClick={toggleManualControl}>
-          {manualControl ? "Disable" : "Enable"} Manual Control
-        </button>
-      </div>
-      <div>
-        <h2>Manual Duration: {manualDuration} seconds</h2>
-        <button onClick={() => updateManualDuration(manualDuration + 1)}>
-          Increase Duration by 1 second
-        </button>
-      </div>
-    </div>
-  );
+    );
 };
 
 export default Showdata;
