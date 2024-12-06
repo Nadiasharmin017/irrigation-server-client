@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import Showdata from "./Showdata";
 
 function HomePage() {
   const [treeData, setTreeData] = useState([
@@ -93,7 +94,7 @@ function HomePage() {
         <h2 className="text-3xl font-bold text-center mb-6">
           Real-Time Tree Updates
         </h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 ml-72">
           {treeData.map((tree) => (
             <div
               key={tree.id}
@@ -121,8 +122,10 @@ function HomePage() {
           ))}
         </div>
       </div>
+      <Showdata></Showdata>
     </div>
   );
+
 }
 
 export default HomePage;
