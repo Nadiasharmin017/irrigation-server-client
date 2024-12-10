@@ -6,7 +6,7 @@ const Navbar = () => {
     <div className="navbar bg-base-100 shadow-md">
       <div className="navbar-start">
         <NavLink to="/" className="btn btn-ghost normal-case text-xl">
-          MyApp
+          Smart Service
         </NavLink>
       </div>
       <div className="navbar-center hidden lg:flex">
